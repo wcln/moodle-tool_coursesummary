@@ -1,36 +1,13 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-/**
- * Quiz Password Change Admin Tool
- *
- * @package    tool_coursesummary
- * @copyright  2017 Colin Bernard {@link http://bclearningnetwork.com}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 
 // Standard GPL and phpdocs
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
-require_once('passchange_form.php');
+require_once('coursesummary_form.php');
 require_once(__DIR__.'/locallib.php');
 
 // Calls require_login and performs permission checks for admin pages
-admin_externalpage_setup('coursesummary'); 
+admin_externalpage_setup('coursesummary');
 
 // Set up the page.
 $title = get_string('pluginname', 'tool_coursesummary');
@@ -41,8 +18,8 @@ $PAGE->set_title($title);
 $PAGE->set_heading($title);
 
 $PAGE->requires->js( new moodle_url($CFG->wwwroot . '/admin/tool/coursesummary/ajax/onselect.js'));
- 
- 
+
+
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('heading', 'tool_coursesummary'));
 
@@ -51,7 +28,7 @@ echo $OUTPUT->box($info);
 
 $success_output = $PAGE->get_renderer('tool_coursesummary');
 
-$mform = new passchange_form();
+$mform = new coursesummary_form();
 
 if ($fromform = $mform->get_data()) {
 	// Process validated data
@@ -80,7 +57,7 @@ if ($fromform = $mform->get_data()) {
 	$mform->display();
 }
 
- 
+
 echo $OUTPUT->footer();
 
 ?>
