@@ -17,9 +17,6 @@ $PAGE->set_url($url);
 $PAGE->set_title($title);
 $PAGE->set_heading($title);
 
-$PAGE->requires->js( new moodle_url($CFG->wwwroot . '/admin/tool/coursesummary/ajax/onselect.js'));
-
-
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('heading', 'tool_coursesummary'));
 
@@ -33,18 +30,13 @@ $mform = new coursesummary_form();
 if ($fromform = $mform->get_data()) {
 	// Process validated data
 	// $mform->get_data() returns data posted in form
-	$course = tool_coursesummary_get_course_string($fromform->course);
-	$password = $fromform->password;
+	$category = $fromform->category;
+	$summary = $fromform->summary;
 
-	// Check if update blank passwords checkbox was marked
-	if (property_exists($fromform, "updateblank")) {
-		tool_coursesummary_set_quiz_passwords($course, $password, true);
-	} else {
-		tool_coursesummary_set_quiz_passwords($course, $password);
-	}
+	tool_coursesummary_set_course_summaries($category, $summary);
 
 	// Render success message HTML
-	$renderable = new \tool_coursesummary\output\success_html(get_string('success', 'tool_coursesummary'), $password, $course, get_string('to', 'tool_coursesummary'));
+	$renderable = new \tool_coursesummary\output\success_html(get_string('success', 'tool_coursesummary'), tool_coursesummary_get_category_name($category), $summary, get_string('to', 'tool_coursesummary'));
 	echo $success_output->render($renderable);
 
 	$mform->display();

@@ -6,7 +6,6 @@ require_once($CFG->libdir.'/formslib.php');
 require_once(__DIR__.'/locallib.php');
 
 
-
 class coursesummary_form extends moodleform {
 
     protected function definition() {
@@ -14,22 +13,18 @@ class coursesummary_form extends moodleform {
 
         $mform = $this->_form;
 
-        $courses = tool_coursesummary_get_courses(); // get from lib
-        $courses = array_reverse($courses, true);
-        $courses[''] = get_string('choosedots');
-        $courses = array_reverse($courses, true);
+        $categories = tool_coursesummary_get_categories(); // get from lib
+        $categories = array_reverse($categories, true);
+        $categories[''] = get_string('choosedots');
+        $categories = array_reverse($categories, true);
 
-        $mform->addElement('select', 'course', get_string('courseselect', 'tool_coursesummary'), $courses);
-        $mform->setType('course', PARAM_RAW);
-        $mform->addRule('course', get_string('required'), 'required', null);
+        $mform->addElement('select', 'category', get_string('categoryselect', 'tool_coursesummary'), $categories);
+        $mform->setType('category', PARAM_RAW);
+        $mform->addRule('category', get_string('required'), 'required', null);
 
-        $mform->addElement('text', 'password', get_string('passwordtext', 'tool_coursesummary'));
-        $mform->setType('password', PARAM_NOTAGS);
-
-        $mform->addElement('checkbox', 'updateblank', get_string('updateblank', 'tool_coursesummary'), get_string('enable', 'tool_coursesummary'));
-        $mform->setType('updateblank', PARAM_BOOL);
-        $mform->addHelpButton('updateblank', 'updateblank', 'tool_coursesummary');
-
+        $mform->addElement('textarea', 'summary', get_string('htmltext', 'tool_coursesummary'), 'rows="15" cols="100"');
+        $mform->setType('summary', PARAM_RAW);
+        $mform->addRule('summary', get_string('required'), 'required', null);
 
         $this->add_action_buttons(false, get_string('submit', 'tool_coursesummary'));
     }

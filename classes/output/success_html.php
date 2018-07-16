@@ -22,38 +22,38 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace tool_coursesummary\output;                                                                                                         
- 
-use renderable;                                                                                                                     
-use renderer_base;                                                                                                                  
-use templatable;                                                                                                                    
-use stdClass;                                                                                                                       
- 
-class success_html implements renderable, templatable {                                                                               
+namespace tool_coursesummary\output;
+
+use renderable;
+use renderer_base;
+use templatable;
+use stdClass;
+
+class success_html implements renderable, templatable {
 
     var $success_string = null;
-    var $password = null;
-    var $course = null;
-    var $to = null;                                                                                                   
- 
-    public function __construct($success_string, $password, $course, $to) {                                                                                        
+    var $category = null;
+    var $summary = null;
+    var $to = null;
+
+    public function __construct($success_string, $category, $summary, $to) {
         $this->success_string = $success_string;
-        $this->password = $password;
-        $this->course = $course;          
-        $this->to = $to;                                                                                     
+        $this->category = $category;
+        $this->summary = $summary;
+        $this->to = $to;
     }
- 
-    /**                                                                                                                             
-     * Export this data so it can be used as the context for a mustache template.                                                   
-     *                                                                                                                              
-     * @return stdClass                                                                                                             
-     */                                                                                                                             
-    public function export_for_template(renderer_base $output) {                                                                    
-        $data = new stdClass();                                                                                                     
+
+    /**
+     * Export this data so it can be used as the context for a mustache template.
+     *
+     * @return stdClass
+     */
+    public function export_for_template(renderer_base $output) {
+        $data = new stdClass();
         $data->success_string = $this->success_string;
-        $data->password = $this->password;
-        $data->course = $this->course;         
-        $data->to = $this->to;                                                                                
-        return $data;                                                                                                               
+        $data->category = $this->category;
+        $data->summary = $this->summary;
+        $data->to = $this->to;
+        return $data;
     }
 }
