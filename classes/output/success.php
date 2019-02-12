@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Quiz Password Change Admin Tool
+ * Course Summary Overwrite Admin Tool
  *
  * @package    tool_coursesummary
- * @copyright  2017 Colin Bernard {@link http://bclearningnetwork.com}
+ * @copyright  2019 Colin Bernard {@link https://wcln.ca}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,18 +29,12 @@ use renderer_base;
 use templatable;
 use stdClass;
 
-class success_html implements renderable, templatable {
+class success implements renderable, templatable {
 
-    var $success_string = null;
     var $category = null;
-    var $summary = null;
-    var $to = null;
 
-    public function __construct($success_string, $category, $summary, $to) {
-        $this->success_string = $success_string;
+    public function __construct($category) {
         $this->category = $category;
-        $this->summary = $summary;
-        $this->to = $to;
     }
 
     /**
@@ -50,10 +44,7 @@ class success_html implements renderable, templatable {
      */
     public function export_for_template(renderer_base $output) {
         $data = new stdClass();
-        $data->success_string = $this->success_string;
         $data->category = $this->category;
-        $data->summary = $this->summary;
-        $data->to = $this->to;
         return $data;
     }
 }

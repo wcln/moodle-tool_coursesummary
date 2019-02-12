@@ -15,29 +15,28 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Quiz Password Change Admin Tool
+ * Course Summary Overwrite Admin Tool
  *
  * @package    tool_coursesummary
- * @copyright  2017 Colin Bernard {@link http://bclearningnetwork.com}
+ * @copyright  2019 Colin Bernard {@link https://wcln.ca}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace tool_coursesummary\output;                                                                                                         
- 
-defined('MOODLE_INTERNAL') || die;                                                                                                  
- 
-use plugin_renderer_base;  
- 
+namespace tool_coursesummary\output;
+
+defined('MOODLE_INTERNAL') || die;
+
+use plugin_renderer_base;
+
 class renderer extends plugin_renderer_base {
-    /**                                                                                                                             
-     * Defer to template.                                                                                                           
-     *                                                                                                                              
-     * @param success_html $page                                                                                                      
-     *                                                                                                                              
-     * @return string html for the page                                                                                             
-     */                                                                                                                             
-    public function render_success_html($page) {                                                                                      
-        $data = $page->export_for_template($this);                                                                                  
-        return parent::render_from_template('tool_coursesummary/success_html', $data);                                                         
-    }           
+
+  public function render_success($page) {
+    $data = $page->export_for_template($this);
+    return parent::render_from_template('tool_coursesummary/success', $data);
+  }
+
+  public function render_failure($page) {
+    // No data is required to render this template.
+    return parent::render_from_template('tool_coursesummary/failure', null);
+  }
 }

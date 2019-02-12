@@ -1,12 +1,11 @@
 <?php
 
-// Standard GPL and phpdocs
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
 require_once('coursesummary_form.php');
 require_once(__DIR__.'/locallib.php');
 
-// Calls require_login and performs permission checks for admin pages
+// Calls require_login and performs permission checks for admin pages.
 admin_externalpage_setup('coursesummary');
 
 // Set up the page.
@@ -17,39 +16,52 @@ $PAGE->set_url($url);
 $PAGE->set_title($title);
 $PAGE->set_heading($title);
 
+// Get the page renderer.
+$renderer = $PAGE->get_renderer('tool_coursesummary');
+
+// Output the page header.
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('heading', 'tool_coursesummary'));
 
+// Output instructions text.
 $info = format_text(get_string('coursesummaryintro', 'tool_coursesummary'), FORMAT_MARKDOWN);
 echo $OUTPUT->box($info);
 
-$success_output = $PAGE->get_renderer('tool_coursesummary');
-
+// Initialize the form.
 $mform = new coursesummary_form();
 
+// Check if the form was submitted.
 if ($fromform = $mform->get_data()) {
-	// Process validated data
-	// $mform->get_data() returns data posted in form
+
+	// Retrieve the category and summary.
 	$category = $fromform->category;
 	$summary = $fromform->summary;
 
-	tool_coursesummary_set_course_summaries($category, $summary);
+	try {
+		// Update the summaries.
+		tool_coursesummary_set_course_summaries($category, $summary);
 
-	// Render success message HTML
-	$renderable = new \tool_coursesummary\output\success_html(get_string('success', 'tool_coursesummary'), tool_coursesummary_get_category_name($category), $summary, get_string('to', 'tool_coursesummary'));
-	echo $success_output->render($renderable);
+		// Render success message HTML
+		$success_output = new \tool_coursesummary\output\success(tool_coursesummary_get_category_name($category), $summary);
+		echo $renderer->render($success_output);
 
+	} catch(Exception $e) {
+
+		// Render failure message HTML.
+		echo $renderer->render_failure(null);
+
+	}
+
+	// Display the form.
 	$mform->display();
 
 } else {
-	// This branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
-	// or on the first display of the form
 
-	// Display the form
+	// Display the form.
 	$mform->display();
 }
 
-
+// Output the page footer.
 echo $OUTPUT->footer();
 
 ?>
