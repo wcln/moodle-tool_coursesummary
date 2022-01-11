@@ -18,7 +18,7 @@
  * Course Summary Overwrite Admin Tool
  *
  * @package    tool_coursesummary
- * @copyright  2019 Colin Bernard {@link https://wcln.ca}
+ * @copyright  2019 Colin Perepelken {@link https://wcln.ca}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
